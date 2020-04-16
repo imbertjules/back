@@ -1,0 +1,32 @@
+version: "3.7"
+
+networks:
+  database:
+    external: false
+
+services:
+
+  api_node:
+    build:
+      dockerfile: ./docker/node/Dockerfile
+      context: .
+    ports:
+      - 8800:${NODE_PORT}
+    volumes:
+      - ./:/usr/src/app
+    depends_on:
+      - mongo
+    networks:
+      - database
+
+  mongo:
+    image: mongo:4.2.3-bionic
+    volumes:
+      - ./var/data/mongo:/data/db
+    ports:
+      - 27017:${MONGODB_PORT}
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    networks:
+      - database

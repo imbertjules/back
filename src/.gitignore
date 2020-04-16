@@ -1,0 +1,5 @@
+/var
+./docker-compose.yaml
+./idea/
+/node_modules
+../package-lock.json
